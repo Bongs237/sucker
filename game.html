@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+		<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" crossorigin="anonymous"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-fHY2UiQlipUq0dEabSM4s+phmn+bcxSYzXP4vAXItBvBHU7zAM/mkhCZjtBEIJexhOMzZbgFlPLuErlJF2b+0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+		<link rel="stylesheet" href="styles.css">
+		<title>sucker</title>
+		<link rel="shortcut icon" href="ball.png">
+	</head>
+
+	<body>
+		<span id="sticks">
+			<img src="joystick.png" id="joystick" height="100">
+			<img src="joystick2.png" id="dot" height="100">
+		</span>
+
+		<div id="container">
+			<div class="d-flex justify-content-between">
+				<h3 id="back-icon" onclick="window.location.href = 'index.html';">
+                    <i class="fa-solid fa-house"></i>
+                </h3>
+				<h3 id="settings-icon" onclick="settingsModal.show()">
+                    <i class="fa-solid fa-gear"></i>
+                </h3>
+			</div>
+			<div class="d-flex justify-content-around">
+				<h1 id="score1"></h1>
+				<h1 id="score2"></h1>
+				<h1 id="countdown"></h1>
+			</div>
+			<h2 id="whoscored"></h2>
+			<img src="field.png" alt="Field" id="field" class="shadow">
+		</div>
+
+		<div class="modal fade" id="settings-dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Settings</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-content">
+						<div class="modal-body text-center">
+							Music:
+							<input type="range" id="musicvol" min="0" max="100" value="25">
+							<br>
+
+							Sounds:
+							<input type="range" id="soundvol" min="0" max="100" value="100">
+							<br>
+
+							Bot speed:
+							<input type="number" value="0.75" id="botspeed">
+							<br>
+
+							Bot "jitteryness":
+							<input type="number" value="1" id="jitter">
+							<br>
+							<small>(higher = more unpredictable)</small>
+							<br>
+
+							Bot reaction time:
+							<input type="number" value="1" min="1" max="10" id="reacttime">
+							<br>
+							<small>(lower = harder)</small>
+							<br>
+							<br>
+
+							Player speed:
+							<input type="number" value="4" id="playerspeed">
+							<br>
+
+							Ball kick speed:
+							<input type="number" value="0.8" id="kickspeed">
+							<br>
+
+                            <span id="arrow-key-stuff">
+                                Use arrow keys:
+                                <input type="checkbox" id="usearrows">
+                                <br>
+                            </span>
+
+                            <small><a href="javascript:" onclick="resetAllSettings()">reset all settings (will reload page)</a></small>
+						</div>
+
+						<div class="modal-footer w-100">
+							<button data-bs-dismiss="modal" class="btn btn-primary w-100">ok</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="win-dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center mt-4">
+						<img alt="Winner!" id="yaywin">
+						<h2 class="display-3" id="player-who-won"></h2>
+						<h3 class="pb-2">won!</h3>
+						<h2><span style="color: red" id="final-player1"></span> - <span style="color: blue" id="final-player2"></span></h2>
+					</div>
+					<div class="modal-footer justify-content-center">
+						<button type="button" class="btn btn-success" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i> PLAY AGAIN!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="engine/game.js"></script>
+		<script src="engine/sprite.js"></script>
+		<script src="engine/score.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>

@@ -1,0 +1,86 @@
+body {
+	background-color: rgb(0, 146, 0);
+	user-select: none;
+	-moz-user-select: none;
+}
+
+small {
+	color: rgb(83, 83, 83);
+}
+
+#joystick {
+	position: absolute;
+	z-index: 1000;
+}
+
+#sticks {
+	z-index: 1000 !important;
+}
+
+#dot {
+	position: absolute;
+	cursor: pointer;
+	z-index: 1000;
+}
+
+#settings-icon, #back-icon {
+	cursor: pointer;
+}
+
+#container {
+	background-color: rgb(179, 253, 179);
+	width: 750px;
+	height: 500px;
+	margin: auto;
+}
+
+#field {
+	position: absolute;
+	top: 120px;
+}
+
+#whoscored {
+	text-align: center;
+	font-weight: bold;
+	position: relative;
+	top: -40px;
+}
+
+h1 {
+	font-weight: 500;
+	font-size: 48pt;
+}
+
+#whoscored {
+	font-size: 21pt;
+}
+
+#score1 {
+	color: red;
+}
+
+#score2 {
+	color: blue;
+}
+
+#countdown {
+	font-size: 100pt;
+	color: white;
+	position: absolute;
+	z-index: 1000;
+	top: 155px;
+}
+
+@keyframes victory {
+	0% {transform: rotate(0deg); top: 0px}
+	50% {transform: rotate(90deg); top: -30px;}
+	100% {transform: rotate(180deg); top: 0px;}
+}
+
+#yaywin {
+	position: relative;
+	animation-name: victory;
+	animation-iteration-count: infinite;
+	animation-duration: 1.5s;
+	animation-timing-function: ease-out;
+}

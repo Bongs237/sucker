@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+		<title>sucker</title>
+		
+		<link rel="shortcut icon" href="ball.png">
+		
+		<style>
+			body {
+				text-align: center;
+			}
+
+			.rainbow {
+				animation: rainbow 2.5s linear;
+				animation-iteration-count: infinite;
+			}
+
+			@keyframes rainbow {
+				100%,0%{
+					color: rgb(255,0,0);
+				}
+				8%{
+					color: rgb(255,127,0);
+				}
+				16%{
+					color: rgb(255,255,0);
+				}
+				25%{
+					color: rgb(127,255,0);
+				}
+				33%{
+					color: rgb(0,255,0);
+				}
+				41%{
+					color: rgb(0,255,127);
+				}
+				50%{
+					color: rgb(0,255,255);
+				}
+				58%{
+					color: rgb(0,127,255);
+				}
+				66%{
+					color: rgb(0,0,255);
+				}
+				75%{
+					color: rgb(127,0,255);
+				}
+				83%{
+					color: rgb(255,0,255);
+				}
+				91%{
+					color: rgb(255,0,127);
+				}
+			}
+
+			.display-1 {
+				background-color: white;
+				border-radius: 5px;
+			}
+
+			#bruh {
+				background-color: rgba(0, 0, 0, 0.5);
+				color: white;
+				border-radius: 2px;
+				animation: zoominout 2s ease-in-out;
+				animation-iteration-count: infinite;
+			}
+
+			@keyframes zoominout {
+				0% {
+					transform: scale(0.95);
+				}
+				50% {
+					transform: scale(1);
+				}
+				100% {
+					transform: scale(0.95);
+				}
+			}
+
+			.btn {
+				height: 50px;
+			}
+
+			.btn:hover {
+				box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.5);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="clickstuff" class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+				<h1>click/tap anywhere to enable audio</h1>
+				<h2>(required)</h2>
+		</div>
+
+		<div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center" style="display: none !important" id="stuff">
+			<h1 class="display-1 rainbow p-2">sucker</h1>
+			<p id="bruh">it's like soccer, but worse...</p>
+			
+			<a class="btn btn-primary w-75 mb-2" href="/game.html">
+				<i class="fa-solid fa-play"></i>
+				Singleplayer
+			</a>
+
+			<a class="btn btn-success w-75" href="/game.html?twoplayers=1">
+				<i class="fa-solid fa-play"></i>
+				2 Players
+			</a>
+		</div>
+
+		<script>
+			let hasClicked = true;
+			const audio = new Audio('sounds/nothing.ogg');
+			let randomBackground = Math.floor(Math.random() * 2);
+			document.body.style.cursor = 'pointer';
+
+			const tryToPlay = setTimeout(() => {
+			audio.play()
+				.then(() => {
+					doTheThing();
+					//clearInterval(tryToPlay);
+				})
+				.catch(error => {
+					hasClicked = false;
+				});
+			}, 0);
+
+			function doTheThing() {
+				hasClicked = true;
+				clickstuff.remove();
+				stuff.style.display = '';
+
+				document.body.style.cursor = '';
+				document.body.style.backgroundImage = 'url("bg.png")';
+				document.body.style.backgroundSize = 'cover';
+
+				let backgroundMusic = new Audio('music/home' + randomBackground + '.mp3');
+				backgroundMusic.play();
+				backgroundMusic.loop = true;
+				backgroundMusic.volume = 0.5;
+
+				document.addEventListener("visibilitychange", () => {
+					if (document.hidden) {
+						backgroundMusic.pause();
+					} else {
+						backgroundMusic.play();
+					}
+				});
+			}
+
+			window.onclick = function() {
+				if (!hasClicked) {
+					doTheThing();
+				}
+			}
+		</script>
+	</body>
+</html>
